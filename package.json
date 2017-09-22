@@ -1,0 +1,20 @@
+{
+  "name": "pati",
+  "version": "0.0.0",
+  "description": "Helpers for async / await",
+  "main": "lib/index.js",
+  "author": "Gil Pedersen <gpdev@gpost.dk>",
+  "license": "BSD-2-Clause",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "devDependencies": {
+    "code": "^5.1.0",
+    "lab": "^14.3.0"
+  },
+  "dependencies": {},
+  "scripts": {
+    "test": "lab -a code -t 100 -L -p",
+    "test-cov-html": "lab -a code -r html -o coverage.html"
+  }
+}
