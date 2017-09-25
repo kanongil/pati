@@ -1,20 +1,34 @@
 {
   "name": "pati",
   "version": "0.0.0",
-  "description": "Helpers for async / await",
+  "description": "Patience helpers for async / await",
   "main": "lib/index.js",
   "author": "Gil Pedersen <gpdev@gpost.dk>",
-  "license": "BSD-2-Clause",
+  "keywords": [
+    "async",
+    "await",
+    "dispatcher",
+    "promises",
+    "cancel",
+    "events",
+    "emitter",
+    "timeout"
+  ],
   "engines": {
     "node": ">=8.0.0"
   },
+  "dependencies": {},
   "devDependencies": {
     "code": "^5.1.0",
     "lab": "^14.3.0"
   },
-  "dependencies": {},
   "scripts": {
     "test": "lab -a code -t 100 -L -p",
     "test-cov-html": "lab -a code -r html -o coverage.html"
+  },
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kanongil/pati.git"
   }
 }
