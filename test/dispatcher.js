@@ -449,10 +449,10 @@ describe('TimeoutDispatcher', () => {
 
 describe('AsyncDispatcher', () => {
 
-    const prepareSimple = (delay = 1) => {
+    const prepareSimple = (delay = 1, options) => {
 
         const emitter = new Events.EventEmitter();
-        const dispatcher = new Pati.EventDispatcher(emitter);
+        const dispatcher = new Pati.EventDispatcher(emitter, options);
 
         if (delay && delay > 0) {
             dispatcher.on('end', Pati.EventDispatcher.end);
@@ -482,6 +482,40 @@ describe('AsyncDispatcher', () => {
             };
 
             expect(setup).to.throw(TypeError, '"source" must be an EventEmitter');
+        });
+
+        it('cleanup option runs after finish()', async () => {
+
+            let clean = false;
+            const cleanup = () => {
+
+                clean = true;
+            };
+
+            const { dispatcher } = prepareSimple(1, { cleanup });
+
+            expect(clean).to.be.false();
+            expect(await dispatcher.finish()).to.not.exist();
+            expect(clean).to.be.true();
+        });
+
+        it('throws when passed non-function cleanup option', async () => {
+
+            const setup = () => {
+
+                prepareSimple(false, { cleanup: {} });
+            };
+
+            expect(setup).to.throw(TypeError, '"options.cleanup" must be a function');
+        });
+
+        it('keepErrorListener option retains the error listener after finish()', async () => {
+
+            const { emitter, dispatcher } = prepareSimple(1, { keepErrorListener: true });
+
+            expect(emitter.listenerCount('error')).to.equal(1);
+            expect(await dispatcher.finish()).to.not.exist();
+            expect(emitter.listenerCount('error')).to.equal(1);
         });
     });
 
