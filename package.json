@@ -1,6 +1,6 @@
 {
   "name": "pati",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Patience helpers for async / await",
   "main": "lib/index.js",
   "author": "Gil Pedersen <gpdev@gpost.dk>",
