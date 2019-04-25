@@ -15,16 +15,16 @@
     "timeout"
   ],
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=8.9.0"
   },
   "dependencies": {},
   "devDependencies": {
-    "code": "^5.1.0",
-    "lab": "^14.3.0"
+    "@hapi/code": "^5.3.1",
+    "@hapi/lab": "^18.1.2"
   },
   "scripts": {
-    "test": "lab -a code -t 100 -L -p",
-    "test-cov-html": "lab -a code -r html -o coverage.html"
+    "test": "lab -a @hapi/code -t 100 -L -p",
+    "test-cov-html": "lab -a @hapi/code -r html -o coverage.html"
   },
   "license": "BSD-3-Clause",
   "repository": {

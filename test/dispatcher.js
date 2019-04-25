@@ -4,8 +4,8 @@
 
 const Events = require('events');
 
-const Code = require('code');
-const Lab = require('lab');
+const Code = require('@hapi/code');
+const Lab = require('@hapi/lab');
 const Pati = require('..');
 
 
@@ -36,7 +36,7 @@ describe('Dispatcher', () => {
 
     describe('constructor()', () => {
 
-        it('throws when passed non-function', async () => {
+        it('throws when passed non-function', () => {
 
             const setup = () => {
 
@@ -107,8 +107,8 @@ describe('Dispatcher', () => {
 
             setImmediate(() => dispatcher.cancel(new Error('rejected')));
 
-            await expect(dispatcher.finish()).to.reject(Error, new Error('rejected'));
-            await expect(dispatcher.finish()).to.reject(Error, new Error('rejected'));
+            await expect(dispatcher.finish()).to.reject(Error, 'rejected');
+            await expect(dispatcher.finish()).to.reject(Error, 'rejected');
         });
 
         it('handles simultaneous calls with rejection', async () => {
@@ -118,8 +118,8 @@ describe('Dispatcher', () => {
             setImmediate(() => dispatcher.cancel(new Error('rejected')));
 
             await Promise.all([
-                await expect(dispatcher.finish()).to.reject(Error, new Error('rejected')),
-                await expect(dispatcher.finish()).to.reject(Error, new Error('rejected'))
+                await expect(dispatcher.finish()).to.reject(Error, 'rejected'),
+                await expect(dispatcher.finish()).to.reject(Error, 'rejected')
             ]);
         });
 
@@ -135,7 +135,7 @@ describe('Dispatcher', () => {
 
     describe('chain()', () => {
 
-        it('throws on non-promise argument', async () => {
+        it('throws on non-promise argument', () => {
 
             const setup = (...args) => {
 
@@ -152,7 +152,7 @@ describe('Dispatcher', () => {
             expect(setup('hello')).to.throw(Error, '"promise" argument must be a Promise');
         });
 
-        it('allows chaining by returning self', async () => {
+        it('allows chaining by returning self', () => {
 
             const dispatcher = prepareSimple();
             const promise = new Promise(() => {});
@@ -216,7 +216,7 @@ describe('Dispatcher', () => {
 
     describe('short()', () => {
 
-        it('throws on non-promise argument', async () => {
+        it('throws on non-promise argument', () => {
 
             const setup = (...args) => {
 
@@ -236,7 +236,7 @@ describe('Dispatcher', () => {
 
     describe('adopt()', () => {
 
-        it('throws on null argument', async () => {
+        it('throws on null argument', () => {
 
             const setup = () => {
 
@@ -247,7 +247,7 @@ describe('Dispatcher', () => {
             expect(setup).to.throw(Error, '"dispatcher" argument must be a Dispatcher');
         });
 
-        it('throws on non-dispatcher argument', async () => {
+        it('throws on non-dispatcher argument', () => {
 
             const setup = () => {
 
@@ -258,7 +258,7 @@ describe('Dispatcher', () => {
             expect(setup).to.throw(Error, '"dispatcher" argument must be a Dispatcher');
         });
 
-        it('allows chaining by returning self', async () => {
+        it('allows chaining by returning self', () => {
 
             const dispatcher = prepareSimple();
             const adopted = prepareSimple();
@@ -327,7 +327,7 @@ describe('TimeoutDispatcher', () => {
 
     describe('constructor()', () => {
 
-        it('throws when passed non-number delay', async () => {
+        it('throws when passed non-number delay', () => {
 
             const setup = (value) => {
 
@@ -474,7 +474,7 @@ describe('AsyncDispatcher', () => {
             expect(await dispatcher.finish()).to.not.exist();
         });
 
-        it('throws when passed non-event emitter', async () => {
+        it('throws when passed non-event emitter', () => {
 
             const setup = () => {
 
@@ -499,7 +499,7 @@ describe('AsyncDispatcher', () => {
             expect(clean).to.be.true();
         });
 
-        it('throws when passed non-function cleanup option', async () => {
+        it('throws when passed non-function cleanup option', () => {
 
             const setup = () => {
 
@@ -559,7 +559,7 @@ describe('AsyncDispatcher', () => {
             expect(dispatched).to.equal('ok');
         });
 
-        it('throws on invalid handler argument', async () => {
+        it('throws on invalid handler argument', () => {
 
             const { dispatcher } = prepareSimple();
 
@@ -579,6 +579,7 @@ describe('AsyncDispatcher', () => {
 
                 dispatcher.end(this);
             };
+
             dispatcher.on('test', onTest);
 
             emitter.emit('test');
@@ -604,8 +605,8 @@ describe('AsyncDispatcher', () => {
 
             dispatcher.cancel(new Error('abort'));
 
-            await expect(dispatcher.finish()).to.reject(Error, new Error('abort'));
-            await expect(processPromise).to.reject(Error, new Error('abort'));
+            await expect(dispatcher.finish()).to.reject(Error, 'abort');
+            await expect(processPromise).to.reject(Error, 'abort');
         });
     });
 
@@ -680,8 +681,8 @@ describe('AsyncDispatcher', () => {
 
             setImmediate(() => emitter.emit('error', new Error('rejected')));
 
-            await expect(dispatcher.finish()).to.reject(Error, new Error('rejected'));
-            await expect(dispatcher.finish()).to.reject(Error, new Error('rejected'));
+            await expect(dispatcher.finish()).to.reject(Error, 'rejected');
+            await expect(dispatcher.finish()).to.reject(Error, 'rejected');
         });
 
         it('handles simultaneous calls with rejection', async () => {
@@ -691,8 +692,8 @@ describe('AsyncDispatcher', () => {
             setImmediate(() => emitter.emit('error', new Error('rejected')));
 
             await Promise.all([
-                await expect(dispatcher.finish()).to.reject(Error, new Error('rejected')),
-                await expect(dispatcher.finish()).to.reject(Error, new Error('rejected'))
+                await expect(dispatcher.finish()).to.reject(Error, 'rejected'),
+                await expect(dispatcher.finish()).to.reject(Error, 'rejected')
             ]);
         });
 
